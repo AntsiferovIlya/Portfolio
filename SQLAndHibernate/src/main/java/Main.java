@@ -32,21 +32,21 @@ public class Main {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-//                                  Создание таблицы LinkedPurchaseList
-//        String create = "CREATE TABLE IF NOT EXISTS linkedpurchaselist " +
-//                "(student_id INT UNSIGNED NOT NULL," +
-//                "course_id INT UNSIGNED NOT NULL)";
-//        Query query = session.createSQLQuery(create).addEntity(LinkedPurchaseList.class);
-//        query.executeUpdate();
+                                  Создание таблицы LinkedPurchaseList
+        String create = "CREATE TABLE IF NOT EXISTS linkedpurchaselist " +
+                "(student_id INT UNSIGNED NOT NULL," +
+                "course_id INT UNSIGNED NOT NULL)";
+        Query query = session.createSQLQuery(create).addEntity(LinkedPurchaseList.class);
+        query.executeUpdate();
 
 
-//                              Заполнение таблицы LinkedPurchaseList
-//        String insertFromStudent = "insert into linkedpurchaselist (student_id, course_id) " +
-//                "select (select id from students where students.name = purchaselist.student_name) as student_id," +
-//                "(select id from courses where courses.name = purchaselist.course_name) as course_id " +
-//                "from purchaselist";
-//        Query query = session.createSQLQuery(insertFromStudent);
-//        query.executeUpdate();
+                              Заполнение таблицы LinkedPurchaseList
+        String insertFromStudent = "insert into linkedpurchaselist (student_id, course_id) " +
+                "select (select id from students where students.name = purchaselist.student_name) as student_id," +
+                "(select id from courses where courses.name = purchaselist.course_name) as course_id " +
+                "from purchaselist";
+        Query query = session.createSQLQuery(insertFromStudent);
+        query.executeUpdate();
 
         String hql = "From " + LinkedPurchaseList.class.getSimpleName();
         List<LinkedPurchaseList> linkedPurchaseLists =  session.createQuery(hql).getResultList();
