@@ -1,0 +1,6 @@
+2022-08-24 21:02:31 [main] ERROR  - java.lang.ArrayIndexOutOfBoundsException: Index 1 out of bounds for length 1
+2022-08-24 21:02:46 [main] ERROR  - java.lang.IllegalArgumentException: Неверный формат команды!
+2022-08-24 21:07:03 [main] ERROR  - java.lang.ArrayIndexOutOfBoundsException: Index 1 out of bounds for length 1
+2022-08-24 21:07:05 [main] ERROR  - java.lang.ArrayIndexOutOfBoundsException: Index 1 out of bounds for length 1
+2022-08-24 21:07:06 [main] ERROR  - java.lang.ArrayIndexOutOfBoundsException: Index 1 out of bounds for length 1
+2022-08-24 21:07:15 [main] ERROR  - java.lang.IllegalArgumentException: Неверный формат команды!
