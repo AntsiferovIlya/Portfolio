@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <title>Редактирование</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"/>
+    </head>
+    <body class="bg-light">
+        <header th:insert="blocks/header :: header"></header>
+        <div class="container mt-2 mb-5">
+            <h1>Редактирование</h1>
+            <br>
+            <div th:each="el : ${redactDetails}" class="alert mt-2 bg-dark">
+                <h3 th:text="${el.title}" class="text-white"/>
+                <p th:text="${el.fullText}" class="text-light"/>
+                <div class="container d-flex flex-column flex-md-row justify-content-end">
+                    <a class="btn btn-outline-light mr-1" th:href="'/redact/' + ${id} + '/edit'" >Редактировать</a>
+                    <form th:action="'/redact/' + ${el.id} + '/remove'" method="post">
+                        <button class="btn btn-outline-light " type="submit">Удалить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <footer class="fixed-bottom" th:insert="blocks/footer :: footer"></footer>
+    </body>
+</html>

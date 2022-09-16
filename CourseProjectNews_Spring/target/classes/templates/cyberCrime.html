@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Кибер-преступность</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"/>
+</head>
+<body class="bg-light">
+<header th:insert="blocks/header :: header"></header>
+<div class="container mt-2 mb-5">
+    <h1>Кибер-преступность</h1>
+    <br>
+    <div class="d-flex flex-column-reverse">
+        <div th:each="el : ${crime}" class="alert mt-2 bg-dark">
+            <h3 th:text="${el.title}" class="text-white"/>
+            <p th:text="${el.anons}" class="text-light"/>
+            <small th:text="${el.topic}" class="text-light"/>
+            <br>
+            <a class="btn btn-outline-light" th:href="'/' + ${el.id}" >Детальнее</a>
+        </div>
+    </div>
+</div>
+<footer th:insert="blocks/footer :: footer"></footer>
+</body>

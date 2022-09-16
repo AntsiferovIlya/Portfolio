@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <title>Редактирование статьи</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"/>
+    </head>
+    <body class="bg-light">
+        <header th:insert="blocks/header :: header"></header>
+        <div class="container mt-2">
+            <h1>Редактирование статьи</h1>
+            <br>
+            <form class="need-validation" method="post">
+                <div th:each="el : ${redactDetails}">
+                    <div>
+                        <label for="title">Название статьи</label>
+                        <input type="text" th:value="${el.title}" name="title" id="title" placeholder="Введите название статьи" class="form-control" required>
+                    </div>
+                    <br>
+                    <div>
+                        <label for="anons">Анонс статьи</label>
+                        <input type="text" th:value="${el.anons}" name="anons" id="anons" placeholder="Введите анонс статьи" class="form-control" required>
+                    </div>
+                    <br>
+                    <div>
+                        <label for="fullText">Полный текст статьи</label>
+                        <textarea name="fullText" id="fullText" placeholder="Введите полный текст статьи" class="form-control" th.text="${el.fullText}" required></textarea>
+                    </div>
+                    <br>
+                    <div>
+                        <select name="topic" class="form-select">
+                            <option selected value="Кибер-преступность">Кибер-преступность</option>
+                            <option value="Новое железо">Новое железо</option>
+                        </select>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-outline-dark">Обновить</button>
+                </div>
+            </form>
+        </div>
+        <footer class="fixed-bottom" th:insert="blocks/footer :: footer"></footer>
+    </body>
+</html>
