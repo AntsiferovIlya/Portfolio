@@ -15,7 +15,8 @@ public class Bank {
     public synchronized boolean isFraud(String fromAccountNum, String toAccountNum, long amount)
             throws InterruptedException {
         Thread.sleep(1000);
-        return random.nextBoolean();
+//        return random.nextBoolean();
+        return false;
     }
 
     public void addAccountToBank(Account account) {
@@ -26,29 +27,43 @@ public class Bank {
         Account fromAccount = accounts.get(fromAccountNum);
         Account toAccount = accounts.get(toAccountNum);
         boolean chek = false;
-
-        if(isEnoughMoney(fromAccount.getMoney(), amount)) {
-            if(amount > MAX_AMOUNT) {
-                System.out.println("Сумма перевода боольше " + MAX_AMOUNT + "."
-                + "\n\tПодождите несколько секунд идет проверка счета.");
-                try {
-                    chek = isFraud(fromAccountNum, toAccountNum, amount);
-                } catch(InterruptedException e) {
-                    e.printStackTrace(System.out);
+        Account lowSyncAcc;
+        Account topSyncAcc;
+        if(fromAccount.hashCode() < toAccount.hashCode()) {
+            lowSyncAcc = fromAccount;
+            topSyncAcc = toAccount;
+        } else {
+            lowSyncAcc = toAccount;
+            topSyncAcc = fromAccount;
+        }
+        synchronized(lowSyncAcc) {
+            synchronized (topSyncAcc) {
+                if (isEnoughMoney(fromAccount.getMoney(), amount)) {
+                    System.out.println("Средств на счету достаточно для перевода.");
+                    if (amount > MAX_AMOUNT) {
+                        System.out.println("Сумма перевода боольше " + MAX_AMOUNT + "."
+                                + "\n\tПодождите несколько секунд идет проверка счета.");
+                        try {
+                            chek = isFraud(fromAccountNum, toAccountNum, amount);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace(System.out);
+                        }
+                        if (chek) {
+                            fromAccount.blockedAccount();
+                            toAccount.blockedAccount();
+                            System.out.println("Перевод не выполнен. Счета " + fromAccount.getAccNumber() + " и " + toAccount.getAccNumber() + " забокированы");
+                        } else {
+                            toAccount.setMoney(toAccount.getMoney() + amount);
+                            fromAccount.setMoney(fromAccount.getMoney() - amount);
+                            System.out.println("Со счета " + fromAccount.getAccNumber() + " было списано " + amount + " и зачислено на счет " + toAccount.getAccNumber());
+                        }
+                    } else {
+                        toAccount.setMoney(toAccount.getMoney() + amount);
+                        fromAccount.setMoney(fromAccount.getMoney() - amount);
+                        System.out.println("Со счета " + fromAccount.getAccNumber() + " было списано " + amount + " и зачислено на счет " + toAccount.getAccNumber());
+                    }
                 }
-                if(chek) {
-                    fromAccount.blockedAccount();
-                    toAccount.blockedAccount();
-                    System.out.println("Перевод не выполнен. Счета " + fromAccount.getAccNumber() + " и " + toAccount.getAccNumber() + " забокированы");
-                }
-                else {
-                    toAccount.setMoney(toAccount.getMoney() + amount);
-                    fromAccount.setMoney(fromAccount.getMoney() - amount);
-                }
-            }
-            else {
-                toAccount.setMoney(toAccount.getMoney() + amount);
-                fromAccount.setMoney(fromAccount.getMoney() - amount);
+                else System.out.println("Средств на счету недостаточно!");
             }
         }
     }
